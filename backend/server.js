@@ -10,7 +10,7 @@ const PORT =process.env.PORT || 8080;
 
 //  Middleware
 app.use(cors({
-  origin: "https://openai-chat-app-front.onrender.com/", 
+  origin: "https://openai-chat-app-front.onrender.com", 
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
