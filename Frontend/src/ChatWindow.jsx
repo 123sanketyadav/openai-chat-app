@@ -23,7 +23,8 @@ function ChatWindow() {
     console.log("message", prompt, "threadId", currThreadId);
 
     try {
-      const response = await fetch("http://localhost:8080/api/chat", {
+     const response = await fetch("https://openai-chat-app-backend-ok6u.onrender.com/api/chat", {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json"
