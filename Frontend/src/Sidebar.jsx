@@ -10,7 +10,7 @@ function Sidebar() {
     setPrevChats, setNewChat, setReply 
   } = useContext(MyContext);
 
-  // ✅ FIXED: Reset everything on new chat
+  //  Reset everything on new chat
   const handleNewChat = () => {
     const newId = uuidv1();
     setCurrThreadId(newId);
@@ -21,15 +21,14 @@ function Sidebar() {
 
   const getAllThreads = async () => {
     try {
-     const response = await fetch("https://openai-chat-app-backend-ok6u.onrender.com/api/thread");
-
+      const response = await fetch("https://openai-chat-app-backend-ok6u.onrender.com/api/thread");
       const res = await response.json();
       const filteredThreads = res.map(thread => ({
         threadId: thread.threadId,
         title: thread.title,
       }));
       console.log("all threads", filteredThreads);
-      setAllThreads(filteredThreads); // ✅ update context
+      setAllThreads(filteredThreads); //  update context
     } catch (err) {
       console.log(err);
     }
@@ -44,12 +43,11 @@ function Sidebar() {
 
     try {
       const response = await fetch(`https://openai-chat-app-backend-ok6u.onrender.com/api/thread/${newThreadId}`);
-
       const res = await response.json();
       console.log("single thread data", res);
-      setPrevChats(res); // ✅ update context
-      setNewChat(false); // ✅ update context
-      setReply(null);    // ✅ Clear any ongoing reply
+      setPrevChats(res); //  update context
+      setNewChat(false); //  update context
+      setReply(null);    //  Clear any ongoing reply
     } catch (err) {
       console.log(err);
     }
@@ -57,22 +55,23 @@ function Sidebar() {
 
   const deleteThread = async (threadId) => {
     try {
-     const response = await fetch(`https://openai-chat-app-backend-ok6u.onrender.com/api/thread/${threadId}`, {
-  method: "DELETE",
-});
+      const response = await fetch(
+        `https://openai-chat-app-backend-ok6u.onrender.com/api/thread/${threadId}`,
+        {
+          method: "DELETE"
+        }
+      );
 
-        method: "DELETE",
-      });
       const res = await response.json();
       console.log("delete response", res);
 
       if (res.success) {
-        // ✅ Remove from UI also
+        //  Remove from UI also
         setAllThreads((prev) => prev.filter(t => t.threadId !== threadId));
 
-        // ✅ If current thread is deleted, start fresh chat
+        //  If current thread is deleted, start fresh chat
         if (currThreadId === threadId) {
-          handleNewChat();   // ✅ FIXED
+          handleNewChat();
         }
       }
     } catch (err) {
@@ -104,7 +103,7 @@ function Sidebar() {
             <i 
               className="fa-solid fa-trash" 
               onClick={(e) => {
-                e.stopPropagation(); // ✅ prevent triggering changeThread
+                e.stopPropagation(); //  prevent triggering changeThread
                 deleteThread(thread.threadId);
               }}
             ></i>
@@ -114,18 +113,17 @@ function Sidebar() {
 
       {/* sign */}
       <div className="sign">
-  <p>
-    {" "}
-    <a 
-      href="https://www.linkedin.com/in/sanket-yadav10/" 
-      target="_blank" 
-      rel="noopener noreferrer"
-      style={{ color: "#0A66C2", textDecoration: "none", fontWeight: "bold" }}
-    >
-       By Sankit Yadav 😎 🤘
-    </a>
-  </p>
-</div>
+        <p>
+          <a 
+            href="https://www.linkedin.com/in/sanket-yadav10/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ color: "#0A66C2", textDecoration: "none", fontWeight: "bold" }}
+          >
+            By Sankit Yadav 😎 🤘
+          </a>
+        </p>
+      </div>
     </section>
   );
 }
